@@ -16,6 +16,11 @@ var gameState = PLAY;
 var distance=0;
 var gameOver, restart;
 
+
+// Add barrier to top and bottom because character is going through the top.
+// Also show high score
+
+
 function preload(){
   pathImg = loadImage("Road.png");
   mainRacerImg1 = loadAnimation("mainPlayer1.png","mainPlayer2.png");
@@ -64,6 +69,8 @@ pinkCG = new Group();
 yellowCG = new Group();
 redCG = new Group();
   
+  localStorage["HighestDistance"]=0
+
 }
 
 function draw() {
@@ -73,6 +80,7 @@ function draw() {
   textSize(20);
   fill(255);
   text("Distance: "+ distance,900,30);
+  text("Highest Score: " + localStorage["HighestDistance"],600,40)
   
   if(gameState===PLAY){
     
@@ -222,8 +230,14 @@ function reset(){
   pinkCG.destroyEach();
   yellowCG.destroyEach();
   redCG.destroyEach();
+
   
-  distance = 0;
+  if(localStorage["HighestDistance"] < distance){
+    localStorage["HighestDistance"] = distance
+  }
+  
+  console.log(localStorage["HighestDistance"])
+  distance = 0
  }
 
 //function reset(){
